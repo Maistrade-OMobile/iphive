@@ -21,6 +21,15 @@
   font-style: normal;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 80px;
+
+}
+
 @theme {
   --font-helvetica: "Helvetica", system-ui, sans-serif;
   --color-primary: #6B184C;
@@ -47,5 +56,32 @@
     /* IE and Edge */
     scrollbar-width: none;
     /* Firefox */
+  }
+
+  /* Custom scrollbar with thin width and custom color */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    width: 2px;
+    background: #6B184C;
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #4a1035;
+  }
+
+  /* For Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #6B184C #f1f1f1;
   }
 }
