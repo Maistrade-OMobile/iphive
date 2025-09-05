@@ -41,7 +41,6 @@ const WaitlistForm = ({ onClose, onSuccess, onError }: WaitlistFormProps) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Check if all required fields are filled
   const isFormValid =
     formData.fullName.trim() !== '' &&
     formData.email.trim() !== '' &&
@@ -76,7 +75,6 @@ const WaitlistForm = ({ onClose, onSuccess, onError }: WaitlistFormProps) => {
       await validationSchema.validate(formData, { abortEarly: false });
       setErrors({});
 
-      // Console log the data
       console.log('Form submitted:', formData);
 
       // Simulate API call delay for testing purpose
@@ -100,7 +98,7 @@ const WaitlistForm = ({ onClose, onSuccess, onError }: WaitlistFormProps) => {
       } else {
         console.error('API Error:', error);
         if (onError) {
-          onError(); // This will trigger the error modal
+          onError();
         }
       }
     } finally {
