@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowLeft } from 'iconsax-reactjs';
+import { ArrowLeft, SmsStar } from 'iconsax-reactjs';
 import AuthContainer from '@/components/auth/AuthContainer';
 import Link from 'next/link';
 
@@ -60,13 +60,9 @@ export default function ForgotPasswordPage() {
 
         <AuthContainer>
             <div className='space-y-5 text-center items-center justify-center flex flex-col'>
-                <div className='rounded-full bg-[#30C10B17] size-20 p-3 opacity-90 flex items-center justify-center'>
-                    <img 
-                    src="/images/sms-star.svg"
-                    alt="sms-star"
-                    />
+                <div className='rounded-full bg-[#30C10B17] text-[#30C10B] p-5 opacity-90'>
+                    <SmsStar/>
                 </div>
-                
 
                 <div className='max-w-md'>
                     <h5 className="text-[#2F3437] font-medium text-[16px] lg:text-[22px] leading-6 lg:leading-9">Check Your Mail</h5>

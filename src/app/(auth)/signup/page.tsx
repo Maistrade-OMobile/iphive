@@ -5,14 +5,22 @@ import React, { useState } from 'react';
 import AuthContainer from '@/components/auth/AuthContainer';
 import Link from 'next/link';
 
-
-const roles = ['Innovator', 'Investor'];
+const ROLES = [
+  { label: 'Innovator', value: 'innovator' },
+  { label: 'Investor', value: 'investor' },
+];
 
 const SignupPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [choosenRole, setChoosenRole] = useState<number>(0);
+  const [choosenRole, setChoosenRole] = useState<string>('innovator');
 
   const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+  });
+
+  const [errors, setErrors] = useState({
     fullName: '',
     email: '',
     password: '',
@@ -30,10 +38,22 @@ const SignupPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const newErrors = {
+      fullName: formData.fullName ? '' : 'Full name is required',
+      email: formData.email ? '' : 'Email is required',
+      password: formData.password ? '' : 'Password is required',
+    };
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((error) => error !== '');
+    if (hasErrors) return;
+
     alert('Form submitted');
     console.log({
       ...formData,
-      role: roles[choosenRole],
+      role: choosenRole,
     });
   };
 
@@ -49,18 +69,18 @@ const SignupPage: React.FC = () => {
               Choose Your Role
             </h6>
             <div className="w-full flex gap-0 justify-between outline-none border-[#C8CDD0] border-2 rounded-md flex-row bg-[#F1F2F3]">
-              {roles.map((role, index) => (
+              {ROLES.map((role) => (
                 <button
-                  key={role}
+                  key={role.value}
                   type="button"
                   className={`${
-                    choosenRole === index
+                    choosenRole === role.value
                       ? 'rounded-md text-primary bg-white'
                       : 'rounded-none text-[#2F3437] bg-[#F1F2F3]'
                   } text-[16px] font-medium leading-6 py-3 px-4 w-1/2 `}
-                  onClick={() => setChoosenRole(index)}
+                  onClick={() => setChoosenRole(role.value)}
                 >
-                  {role}
+                  {role.label}
                 </button>
               ))}
             </div>
@@ -82,6 +102,9 @@ const SignupPage: React.FC = () => {
               placeholder="Enter your full name"
               className="w-full p-3 border-2 rounded-md outline-none border-[#C8CDD0] placeholder:text-[#ACB4B9] text-[16px] leading-6 focus:border-primary transition-colors duration-200 ease-in-out"
             />
+            {errors.fullName && (
+              <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>
+            )}
           </div>
 
           <div>
@@ -100,6 +123,9 @@ const SignupPage: React.FC = () => {
               placeholder="Enter your email address"
               className="w-full p-3 border-2 rounded-md border-[#C8CDD0] outline-none placeholder:text-[#ACB4B9] text-[16px] leading-6 focus:border-primary transition-colors duration-200 ease-in-out"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email}</p>
+            )}
           </div>
 
           <div className="relative">
@@ -123,6 +149,9 @@ const SignupPage: React.FC = () => {
             >
               {showPassword ? <EyeSlash size={20} /> : <Eye size={20} />}
             </span>
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password}</p>
+            )}
           </div>
 
           <button
@@ -134,7 +163,10 @@ const SignupPage: React.FC = () => {
         </form>
 
         <p className="text-[14px] text-[#69757C] leading-5">
-          Already have an account? <Link href="/login"><span className="text-primary">Login</span></Link>
+          Already have an account?{' '}
+          <Link href="/login">
+            <span className="text-primary">Login</span>
+          </Link>
         </p>
       </AuthContainer>
     </div>
